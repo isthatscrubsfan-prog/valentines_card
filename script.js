@@ -5,44 +5,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttonsDiv = document.querySelector('.buttons');
     const resultDiv = document.getElementById('result');
 
-    // Прямые ссылки на гифки (используем максимально надежные домены Giphy)
-    const dancingYorkieGif = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG91bDRpM3NndWV5cDZ5MW1zZmE0eHJhcnNiaHNndTlnM3YwZ214eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPqJ8Ie9f1a26bS/giphy.gif'; 
-    const poopGif = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2I1OHR3Z3M0ZHg0Y3R3eXN4eXN4eXN4eXN4eXN4eXN4eXN4eXN4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/d9d2x1zU923j11v2wL/giphy.gif';
+    // Ссылки на файлы, которые вы загрузили в GitHub
+    const dancingYorkieGif = 'happy.gif'; 
+    const poopGif = 'poop.gif';
 
     // Функция для перемещения кнопки "Нет"
     const moveNoButton = () => {
+        // Вычисляем случайные координаты внутри окна браузера
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         
-        noBtn.style.position = 'fixed'; // Используем fixed, чтобы летала по всему экрану
+        noBtn.style.position = 'fixed';
         noBtn.style.left = `${x}px`;
         noBtn.style.top = `${y}px`;
     };
 
-    // Кнопка убегает при наведении
+    // Кнопка убегает при наведении курсора
     noBtn.addEventListener('mouseover', moveNoButton);
     
-    // Кнопка убегает при попытке нажатия (для телефонов)
+    // Кнопка убегает при касании (для мобильных телефонов)
     noBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Предотвращаем стандартное нажатие
         moveNoButton();
     });
 
-    // Если всё-таки нажали "Нет" (через 5 попыток кнопка перестанет убегать)
+    // Счетчик для тех, кто всё-таки смог нажать "Нет" (например, через Tab)
     let clickCount = 0;
     noBtn.addEventListener('click', () => {
         clickCount++;
-        if (clickCount > 5) {
+        if (clickCount >= 1) { // Если муж оказался супер-быстрым и нажал
             question.textContent = 'Ну ты и попа! 💩';
             buttonsDiv.style.display = 'none';
-            resultDiv.innerHTML = `<img src="${poopGif}" style="width: 100%; max-width: 300px;">`;
+            resultDiv.innerHTML = `<img src="${poopGif}" style="width: 100%; max-width: 300px; border-radius: 15px;">`;
         }
     });
 
-    // Если нажали "Да"
+    // Логика для кнопки "Да"
     yesBtn.addEventListener('click', () => {
         question.textContent = 'Ура, мы идем покупать тебе новую одежду! 👗✨';
         buttonsDiv.style.display = 'none';
-        resultDiv.innerHTML = `<img src="${dancingYorkieGif}" style="width: 100%; max-width: 300px;">`;
+        resultDiv.innerHTML = `<img src="${dancingYorkieGif}" style="width: 100%; max-width: 300px; border-radius: 15px;">`;
     });
 });
